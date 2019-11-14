@@ -1,2 +1,4 @@
 *.pdf
 *.out
+*.DS_store
+*.gitignore
