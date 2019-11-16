@@ -2,16 +2,23 @@
 #include <iostream>
 using namespace std;
 
-// TODO: add a boolean parameter for which hash function to use
-
-LLHashTable::LLHashTable(){
-    TABLE_SIZE = 6; //1019
+/**
+ * Constructs the table with table
+ * - given tableSize
+ * - given which hashFunction to use
+ */
+LLHashTable::LLHashTable(int tableSize, bool hashFunction){
+    TABLE_SIZE = tableSize;
+    functionOne = hashFunction;
     LLhashTable  = new node* [TABLE_SIZE];
     for(int i=0; i<TABLE_SIZE; i++){
         LLhashTable[i] = nullptr;
     }
 }
 
+/**
+ * TODO: de-allocate all the memory used by the hashtable
+ */
 LLHashTable::~LLHashTable(){
     cout << "Deconstructing" << endl;
 }
@@ -23,8 +30,12 @@ node* LLHashTable::createLLNode(int key){
     return newNode;
 }
 
-int LLHashTable::hashFunction(int key){
+int LLHashTable::hashFunctionOne(int key){
     return key % TABLE_SIZE;
+}
+
+int LLHashTable::hashFunctionTwo(int key){
+    return floor(key/TABLE_SIZE);
 }
 
 // Used for testing to view the table
@@ -46,7 +57,12 @@ void LLHashTable::printHashTable(){
  * - return NULL if it does not exist
  */
 node* LLHashTable::searchTable(int key){
-    int index = hashFunction(key);
+    int index;
+    if(functionOne){
+        index = hashFunctionOne(key);
+    }else{
+        index = hashFunctionTwo(key);
+    }
     node* curr = LLhashTable[index];
     while(curr){
         if(curr->key == key){
@@ -67,7 +83,12 @@ node* LLHashTable::searchTable(int key){
  */
 void LLHashTable::insertNode(int key){
     if(!searchTable(key)){
-        int index = hashFunction(key);
+        int index;
+        if(functionOne){
+            index = hashFunctionOne(key);
+        }else{
+            index = hashFunctionTwo(key);
+        }
         node* newNode = createLLNode(key);
         if(LLhashTable[index] == NULL){
             LLhashTable[index] = newNode;
@@ -92,7 +113,12 @@ void LLHashTable::insertNode(int key){
 void LLHashTable::deleteNode(int key){
     cout << "Attempting to delete " << key << endl;
     if(searchTable(key)){
-        int index = hashFunction(key);
+        int index;
+        if(functionOne){
+            index = hashFunctionOne(key);
+        }else{
+            index = hashFunctionTwo(key);
+        }
         node* curr = LLhashTable[index];
         node* prev = NULL;
         if(curr->key == key){

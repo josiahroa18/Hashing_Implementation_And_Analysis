@@ -20,11 +20,13 @@ class LLHashTable{
         int TABLE_SIZE;
         node* *LLhashTable;
         node* createLLNode(int key);
+        bool functionOne;
     public:
-        LLHashTable();
+        LLHashTable(int tableSize, bool hashFunction);
         ~LLHashTable();
         // Hashing functions
-        int hashFunction(int key);
+        int hashFunctionOne(int key);
+        int hashFunctionTwo(int key);
         void printHashTable();
         node* searchTable(int key);
         void insertNode(int key);

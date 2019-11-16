@@ -9,27 +9,27 @@ using namespace std;
 int main(){
     int values[6] = {3, 13, 19, 7, 5, 6};
 
-    // LL Hash Table Collision Resolution Implementation
-    // LLHashTable hashTable;
-    // for(int i=0; i<6; i++){
-    //     cout << "Inserting: " << values[i] << endl;
-    //     hashTable.insertNode(values[i]);
-    // }
-    // hashTable.printHashTable();
-    // hashTable.deleteNode(1);
-    // hashTable.deleteNode(6);
-    // hashTable.deleteNode(19);
-    // hashTable.printHashTable();
+    //LL Hash Table Collision Resolution Implementation
+    LLHashTable hashTable(6, true);
+    for(int i=0; i<6; i++){
+        cout << "Inserting: " << values[i] << endl;
+        hashTable.insertNode(values[i]);
+    }
+    hashTable.printHashTable();
+    hashTable.deleteNode(1);
+    hashTable.deleteNode(6);
+    hashTable.deleteNode(19);
+    hashTable.printHashTable();
 
     // RBT Test Cases
-    RBT tree;
-    tree.insert(7);
-    tree.insert(6);
-    tree.insert(2);
-    tree.insert(4);
-    tree.insert(3);
-    tree.insert(5);
-    tree.insert(1);
-    tree.printRBT();
+    // RBT tree;
+    // tree.insert(7);
+    // tree.insert(6);
+    // tree.insert(2);
+    // tree.insert(4);
+    // tree.insert(3);
+    // tree.insert(5);
+    // tree.insert(1);
+    // tree.printRBT();
 
 }
