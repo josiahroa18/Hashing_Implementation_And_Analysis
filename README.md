@@ -6,7 +6,7 @@ In this project, I will be implementing and comparing performance characteristic
 <b>Collision Resolution Methods<b>
   <ol>
     <li>Linked List Chaining (in progress)</li>
-    <li>Red Black Tree Chaining (in progress)</li>
+    <li>Heap Sort (in progress)</li>
     <li>Coming Soon</li>
     <li>Coming Soon</li>
   </ol>
