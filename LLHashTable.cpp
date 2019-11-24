@@ -6,6 +6,8 @@ using namespace std;
  * Constructs the table with table
  * - given tableSize
  * - given which hashFunction to use
+ *      true - function one
+ *      false - function two
  */
 LLHashTable::LLHashTable(int tableSize, bool hashFunction){
     TABLE_SIZE = tableSize;
@@ -17,10 +19,15 @@ LLHashTable::LLHashTable(int tableSize, bool hashFunction){
 }
 
 /**
- * TODO: de-allocate all the memory used by the hashtable
+ * De-allocate all the memory used by the hashtable
  */
 LLHashTable::~LLHashTable(){
     cout << "Deconstructing" << endl;
+    for(int i=0; i<TABLE_SIZE; i++){
+        while (LLhashTable[i] != NULL){
+            deleteNode(LLhashTable[i]->key);
+        }
+    }
 }
 
 node* LLHashTable::createLLNode(int key){
@@ -111,7 +118,6 @@ void LLHashTable::insertNode(int key){
  * - handles end LL node deletion
  */
 void LLHashTable::deleteNode(int key){
-    cout << "Attempting to delete " << key << endl;
     if(searchTable(key)){
         int index;
         if(functionOne){
