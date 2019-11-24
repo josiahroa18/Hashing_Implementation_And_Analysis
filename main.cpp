@@ -1,6 +1,5 @@
 #include <iostream>
 #include "LLHashTable.hpp"
-#include "RBT.hpp"
 using namespace std;
 
 // TODO: add a boolean parameter for which hash function to use
@@ -20,16 +19,19 @@ int main(){
     // hashTable.deleteNode(6);
     // hashTable.deleteNode(19);
     // hashTable.printHashTable();
+    int collisionMethod;
+    cin >> collisionMethod;
+    switch(collisionMethod){
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+    }
 
-    //RBT Test Cases
-    RBT tree;
-    tree.insert(7);
-    tree.insert(6);
-    tree.insert(2);
-    tree.insert(4);
-    tree.insert(3);
-    tree.insert(5);
-    tree.insert(1);
-    tree.printRBT();
+
+
 
 }
