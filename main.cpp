@@ -1,5 +1,6 @@
 #include <iostream>
 #include "LLHashTable.hpp"
+#include "LPHashTable.hpp"
 using namespace std;
 
 void displayMenu(){
@@ -69,6 +70,11 @@ int main(){
     // Linear Probing
     else if(collisionMethod == 3){
         cout << "Linear Probing" << endl;
+        LPHashTable hashTable(size, choice);
+        for(int i=0; i<size; i++){
+            hashTable.insertKey(values[i]);
+        }
+        hashTable.printTable();
         return 0;
     }
     // Cuckoo Hashing

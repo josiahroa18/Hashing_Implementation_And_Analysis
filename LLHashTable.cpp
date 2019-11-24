@@ -28,6 +28,8 @@ LLHashTable::~LLHashTable(){
             deleteNode(LLhashTable[i]->key);
         }
     }
+    delete [] LLhashTable;
+    LLhashTable = NULL;
 }
 
 node* LLHashTable::createLLNode(int key){
