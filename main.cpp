@@ -1,8 +1,13 @@
 #include <iostream>
 #include "LLHashTable.hpp"
+#include "BSTHashTable.hpp"
 #include "LPHashTable.hpp"
 using namespace std;
 
+/**
+ * Displays options for the user to select which type of collision
+ * method they would like to use
+ */
 void displayMenu(){
     cout << "Please select a collision method (1-4)" << endl;
     cout << "(1) Linked List Chaining" << endl;
@@ -11,6 +16,10 @@ void displayMenu(){
     cout << "(4) Cuckoo Hashing" << endl;
 }
 
+/**
+ * Displays options for the user to select which hash function
+ * they would like to use if necessary
+ */
 void displayHashFunctionChoice(){
     cout << "Please select which hash function to use (1-2)" << endl;
     cout << "(1) Hash Function One" << endl;
@@ -62,7 +71,7 @@ int main(){
         }
         hashTable.printHashTable();
     }
-    // Binary Heap Chaining
+    // Binary Search Tree Chaining
     else if(collisionMethod == 2){
         cout << "Binary Heap Chaining" << endl;
         return 0;
