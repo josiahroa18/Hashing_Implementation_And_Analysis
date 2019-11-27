@@ -1,3 +1,4 @@
 *.pdf
 *.out
+*.csv
 .DS_Store
