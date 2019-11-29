@@ -19,8 +19,7 @@ struct BSTNode{
 
 class BSTHashTable{
     private:
-        BSTNode* *table;
-        BSTNode* createBSTNode(int key);
+        BSTNode* *BSThashTable;
         int TABLE_SIZE;
         bool functionOne;
     public:
