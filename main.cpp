@@ -29,7 +29,7 @@ void displayHashFunctionChoice(){
 }
 
 int main(){
-    int values[6] = {3, 13, 19, 7, 5, 6};
+    int values[6] = {25, 13, 19, 7, 5, 6};
     int size = 6;
     int collisionMethod;
     int hashFunctionChoice;
@@ -79,6 +79,8 @@ int main(){
         for(int i=0; i<size; i++){
             hashTable.insertNode(values[i]);
         }
+        //hashTable.deleteNode(13);
+        hashTable.deleteNode(13);
         hashTable.printHashTable();
         return 0;
     }

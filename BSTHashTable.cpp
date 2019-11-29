@@ -132,3 +132,77 @@ void BSTHashTable::insertNode(int key){
         BSThashTable[index] = insert(BSThashTable[index], key);
     }
 }
+
+BSTNode* findMinNode(BSTNode* curr){
+    while(curr && curr->left != NULL){
+        curr = curr->left;
+    }
+    return curr;
+}
+
+/**
+ * 
+ */
+BSTNode* delNode(BSTNode* curr, int key){
+    if(curr->key == key){
+        // Case 1: Deleting node with no children
+        if(curr->left == NULL && curr->right == NULL){
+            delete curr;
+            curr = NULL;
+            return NULL;
+        }
+        // Case 2: Deleting node with no right child
+        if(curr->right == NULL){
+            BSTNode* temp = curr;
+            curr->parent->left = curr->left;
+            delete curr;
+            curr = NULL;
+            return temp;
+        }
+        // Case 3: Deleting node with no left child
+        if(curr->left == NULL){
+            BSTNode* temp = curr;
+            curr->parent->right = curr->right;
+            delete curr;
+            curr = NULL;
+            return temp;
+        }
+        // Case 4: Deleting node with two children
+        BSTNode* temp = findMinNode(curr->right);
+        curr->key = temp->key;
+        curr->right = delNode(curr->right, temp->key);
+        return curr;
+    }
+    if(key < curr->key){
+        curr->left = delNode(curr->left, key);
+    }
+    if(key > curr->key){
+        curr->right = delNode(curr->right, key);
+    }
+    return curr;
+}
+
+/**
+ * 
+ */
+void BSTHashTable::deleteNode(int key){
+    int index;
+    if(functionOne){
+        index = hashFunctionOne(key);
+    }else{
+        index = hashFunctionTwo(key);
+    }
+    // Search the Table to confirm the key exists
+    BSTNode* foundNode = searchTable(key);
+    if(foundNode == NULL){
+        cout << key << " does not exist in the table" << endl;
+        return;
+    }
+    // Handle case where the node at the index has no children
+    if(BSThashTable[index]->left == NULL && BSThashTable[index]->right == NULL){
+        delete BSThashTable[index];
+        BSThashTable[index] = NULL;
+    }else{
+        BSThashTable[index] = delNode(BSThashTable[index], key);
+    }
+}
