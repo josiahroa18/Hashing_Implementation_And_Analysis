@@ -61,6 +61,20 @@ void BSTHashTable::printHashTable(){
 }
 
 /**
+ * Will run the searchTable function, use this function for lookup tests
+ * - If the node does not exist, output that the node does not exist
+ * - If the node exists, output the found key from the table
+ */
+void BSTHashTable::printSearch(int key){
+    BSTNode* foundNode = searchTable(key);
+    if(foundNode == NULL){
+        cout << key << " is not in the table" << endl;
+    }else{
+        cout << "Found " << foundNode->key << endl;
+    }
+}
+
+/**
  * Searches for the given key in the hash table
  * - Returns node if the key is found
  * - Returns null if the key is not found
@@ -76,7 +90,6 @@ BSTNode* BSTHashTable::searchTable(int key){
         BSTNode* curr = BSThashTable[index];
         while(curr != NULL){
             if(curr->key == key){
-                cout << "Found " << curr->key << endl; 
                 return curr;
             }else{
                 if(key < curr->key){
@@ -86,7 +99,6 @@ BSTNode* BSTHashTable::searchTable(int key){
                 }
             }
         }
-        cout << "Key doesn't exist" << endl;
     }
     return NULL;
 }
@@ -133,6 +145,9 @@ void BSTHashTable::insertNode(int key){
     }
 }
 
+/**
+ * Finds the min node starting from a specified node in the tree
+ */
 BSTNode* findMinNode(BSTNode* curr){
     while(curr && curr->left != NULL){
         curr = curr->left;
@@ -141,7 +156,8 @@ BSTNode* findMinNode(BSTNode* curr){
 }
 
 /**
- * 
+ * Standard BST deletion implementation which handles multiple cases
+ *  for node deletion
  */
 BSTNode* delNode(BSTNode* curr, int key){
     if(curr->key == key){
@@ -183,7 +199,9 @@ BSTNode* delNode(BSTNode* curr, int key){
 }
 
 /**
- * 
+ * Locates the node in the table if it exists
+ * If there is no BST chaining at specified index, simpley delete
+ * If there is BST chaining at specified index, run delNode helper function
  */
 void BSTHashTable::deleteNode(int key){
     int index;
