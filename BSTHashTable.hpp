@@ -12,7 +12,6 @@ using namespace std;
 
 struct BSTNode{
     int key;
-    BSTNode* parent;
     BSTNode* left;
     BSTNode* right;
 };

@@ -13,6 +13,13 @@ BSTHashTable::BSTHashTable(int tableSize, bool hashFunction){
 
 BSTHashTable::~BSTHashTable(){
     cout << "Deconstructing" << endl;
+    for(int i=0; i<TABLE_SIZE; i++){
+        if(BSThashTable[i] != NULL){
+            while(BSThashTable[i] != NULL){
+                deleteNode(BSThashTable[i]->key);
+            }
+        }
+    }
     delete [] BSThashTable;
     BSThashTable = NULL;
 }
@@ -23,7 +30,6 @@ BSTHashTable::~BSTHashTable(){
 BSTNode* createBSTNode(int key){
     BSTNode* newNode = new BSTNode;
     newNode->key = key;
-    newNode->parent = NULL;
     newNode->left = NULL;
     newNode->right = NULL;
     return newNode;
@@ -113,11 +119,9 @@ BSTNode* insert(BSTNode* curr, int key){
     if(key < curr->key){
         BSTNode* leftChild = insert(curr->left, key);
         curr->left = leftChild;
-        leftChild->parent = curr;
     }else if(key > curr->key){
         BSTNode* rightChild = insert(curr->right, key);
         curr->right = rightChild;
-        rightChild->parent = curr;
     }
     return curr;
 }
@@ -169,16 +173,14 @@ BSTNode* delNode(BSTNode* curr, int key){
         }
         // Case 2: Deleting node with no right child
         if(curr->right == NULL){
-            BSTNode* temp = curr;
-            curr->parent->left = curr->left;
+            BSTNode* temp = curr->left;
             delete curr;
             curr = NULL;
             return temp;
         }
         // Case 3: Deleting node with no left child
         if(curr->left == NULL){
-            BSTNode* temp = curr;
-            curr->parent->right = curr->right;
+            BSTNode* temp = curr->right;
             delete curr;
             curr = NULL;
             return temp;

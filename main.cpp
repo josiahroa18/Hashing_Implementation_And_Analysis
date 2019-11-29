@@ -79,7 +79,7 @@ int main(){
         for(int i=0; i<size; i++){
             hashTable.insertNode(values[i]);
         }
-        //hashTable.deleteNode(13);
+        hashTable.deleteNode(25);
         hashTable.deleteNode(13);
         hashTable.printHashTable();
         return 0;
