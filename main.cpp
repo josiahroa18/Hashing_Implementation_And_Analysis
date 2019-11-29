@@ -70,10 +70,16 @@ int main(){
             hashTable.insertNode(values[i]);
         }
         hashTable.printHashTable();
+        return 0;
     }
     // Binary Search Tree Chaining
     else if(collisionMethod == 2){
         cout << "Binary Heap Chaining" << endl;
+        BSTHashTable hashTable(size, choice);
+        for(int i=0; i<size; i++){
+            hashTable.insertNode(values[i]);
+        }
+        hashTable.printHashTable();
         return 0;
     }
     // Linear Probing

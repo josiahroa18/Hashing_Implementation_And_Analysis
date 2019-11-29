@@ -12,7 +12,7 @@ using namespace std;
 LLHashTable::LLHashTable(int tableSize, bool hashFunction){
     TABLE_SIZE = tableSize;
     functionOne = hashFunction;
-    LLhashTable  = new node* [TABLE_SIZE];
+    LLhashTable = new node* [TABLE_SIZE];
     for(int i=0; i<TABLE_SIZE; i++){
         LLhashTable[i] = nullptr;
     }
