@@ -2,6 +2,7 @@
 #include "LLHashTable.hpp"
 #include "BSTHashTable.hpp"
 #include "LPHashTable.hpp"
+#include "CHHashTable.hpp"
 using namespace std;
 
 /**
@@ -30,7 +31,8 @@ void displayHashFunctionChoice(){
 
 int main(){
     int values[6] = {25, 13, 19, 7, 5, 6};
-    int size = 6;
+    int valuesTwo[11] = {20, 50, 53, 75, 100, 67, 105, 3, 36, 39, 6}; 
+    int size = 11;
     int collisionMethod;
     int hashFunctionChoice;
     // Get collision method
@@ -60,6 +62,7 @@ int main(){
                 break;
         }
     }
+
     // Operate on the desired hash table
     cout << "Initializing hash table" << endl;
     // Linked List Chaining
@@ -79,8 +82,6 @@ int main(){
         for(int i=0; i<size; i++){
             hashTable.insertNode(values[i]);
         }
-        hashTable.deleteNode(25);
-        hashTable.deleteNode(13);
         hashTable.printHashTable();
         return 0;
     }
@@ -97,6 +98,13 @@ int main(){
     // Cuckoo Hashing
     else{
         cout << "Cuckoo Hashing" << endl;
+        CHHashTable hashTable(size);
+        for(int i=0; i<size; i++){
+            hashTable.insert(valuesTwo[i]);
+        }
+        hashTable.printTable();
+        hashTable.deleteValue(20);
+        hashTable.printTable();
         return 0;
     }
 }
