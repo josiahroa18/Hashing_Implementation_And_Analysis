@@ -21,6 +21,8 @@ class LLHashTable{
         node* *LLhashTable;
         node* createLLNode(int key);
         bool functionOne;
+        int keyCount;
+        float loadFactor;
     public:
         LLHashTable(int tableSize, bool hashFunction);
         ~LLHashTable();
@@ -31,6 +33,7 @@ class LLHashTable{
         node* searchTable(int key);
         void insertNode(int key);
         void deleteNode(int key);
+        float getLoadFactor();
 };
 
 #endif

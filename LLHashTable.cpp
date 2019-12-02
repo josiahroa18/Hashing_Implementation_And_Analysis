@@ -108,9 +108,12 @@ void LLHashTable::insertNode(int key){
             }
             curr->next = newNode;
         }
-    }else{
-        cout << key << " is a duplicate entry" << endl;
     }
+    // Used for testing
+    // else{
+    //     cout << key << " is a duplicate entry" << endl;
+    // }
+    keyCount++;
 }
 
 /**
@@ -154,9 +157,17 @@ void LLHashTable::deleteNode(int key){
                 prev->next = NULL;
             }
         }
-        cout << "Deleted " << key << " from the table" << endl;
-    }else{
-        cout << key << " is not in the table" << endl;
+        // Used for testing
+        //cout << "Deleted " << key << " from the table" << endl;
     }
+    // Used for testing
+    // else{
+    //     cout << key << " is not in the table" << endl;
+    // }
+    keyCount--;
+}
+
+float LLHashTable::getLoadFactor(){
+    return (float)keyCount/(float)TABLE_SIZE;
 }
 
