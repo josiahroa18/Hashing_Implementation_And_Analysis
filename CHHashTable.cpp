@@ -6,6 +6,8 @@ CHHashTable::CHHashTable(int tableSize){
     TABLE_SIZE = tableSize;
     tableOne = new int [TABLE_SIZE];
     tableTwo = new int [TABLE_SIZE];
+    valuesStored = 0;
+    loadFactor = 0;
     for(int i=0; i<TABLE_SIZE; i++){
         tableOne[i] = -1;
         tableTwo[i] = -1;
@@ -45,12 +47,14 @@ void CHHashTable::insert(int key){
         indexTwo = hashFunctionTwo(newKey);
         if(tableOne[indexOne] == -1){
             tableOne[indexOne] = newKey;
+            valuesStored++;
             return;
         }
         tempKey = tableOne[indexOne];
         tableOne[indexOne] = newKey;
         if(tableTwo[indexTwo] == -1){
             tableTwo[indexTwo] = tempKey;
+            valuesStored++;
             return;
         }else{
             // Take what was in tableTwo and insert into Table One (loop)
@@ -150,13 +154,23 @@ void CHHashTable::deleteValue(int key){
     if(tableOne[indexOne] == key){
         cout << "Deleted " << tableOne[indexOne] << endl;
         tableOne[indexOne] = -1;
+        valuesStored--;
         return;
     }
     int indexTwo = hashFunctionTwo(key);
     if(tableTwo[indexTwo] == key){
         cout << "Deleted " << tableTwo[indexTwo] << endl;
         tableTwo[indexTwo] = -1;
+        valuesStored--;
         return;
     }
     cout << key << " not in hash table" << endl;
+}
+
+void CHHashTable::getLoadFactor(){
+    cout << "Load Factor: " << valuesStored/TABLE_SIZE << endl;
+}
+
+void CHHashTable::getreHashCount(){
+    cout << "Table re-hashed " << reHashCount << " times" << endl;
 }
