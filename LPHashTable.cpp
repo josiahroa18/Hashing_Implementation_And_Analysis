@@ -5,28 +5,22 @@ using namespace std;
 LPHashTable::LPHashTable(int tableSize, bool hashFunction){
     TABLE_SIZE = tableSize;
     functionOne = hashFunction;
-    hashTable = new LPNode* [TABLE_SIZE];
+    keyCount = 0;
+    loadFactor = 0.0;
+    hashTable = new int [TABLE_SIZE];
     for(int i=0; i<TABLE_SIZE; i++){
-        hashTable[i] = nullptr;
+        hashTable[i] = -1;
     }
 }
 
 LPHashTable::~LPHashTable(){
     for(int i=0; i<TABLE_SIZE; i++){
-        if(hashTable[i] != NULL){
-            hashTable[i] = NULL;
-            delete hashTable[i];
+        if(hashTable[i] != -1){
+            hashTable[i] = -1;
         }
     }
     delete [] hashTable;
     hashTable = NULL;
-}
-
-LPNode* LPHashTable::createNode(int key, int index){
-    LPNode* newNode = new LPNode;
-    newNode->key = key;
-    newNode->index = index;
-    return newNode;
 }
 
 int LPHashTable::hashFunctionOne(int key){
@@ -40,14 +34,14 @@ int LPHashTable::hashFunctionTwo(int key){
 void LPHashTable::printTable(){
     for(int i=0; i<TABLE_SIZE; i++){
         cout << i << " -> ";
-        if(hashTable[i] != NULL){
-            cout << hashTable[i]->key;
+        if(hashTable[i] != -1){
+            cout << hashTable[i];
         }
         cout << endl;
     }
 }
 
-LPNode* LPHashTable::searchKey(int key){
+int LPHashTable::searchKey(int key){
     int index;
     int originIndex;
     if(functionOne){
@@ -56,62 +50,74 @@ LPNode* LPHashTable::searchKey(int key){
         index = hashFunctionTwo(key);
     }
     originIndex = index;
-    while(hashTable[index]->key != key){
-        if(index == TABLE_SIZE){
+    while(hashTable[index] != key){
+        if(index == TABLE_SIZE-1){
             index = 0;
         }else{
             index ++;
         }
         if(index == originIndex){
             cout << "Key value not found" << endl;
-            return NULL;
+            return -1;
         }
     }
-    return hashTable[index];
+    return index;
 }
 
 void LPHashTable::insertKey(int key){
     int index;
-    LPNode* newNode;
+    int originIndex;
     if(functionOne){
         index = hashFunctionOne(key);
     }else{
         index = hashFunctionTwo(key);
     }
-    if(hashTable[index] == NULL){
-        newNode = createNode(key, index);
-        hashTable[index] = newNode;
+    if(hashTable[index] == -1){
+        hashTable[index] = key;
     }else{
-        while(hashTable[index] != NULL){
+        originIndex = index;
+        while(hashTable[index] != -1){
             if(index == TABLE_SIZE){
                 index = 0;
             }else{
                 index ++;
             }
+            if(index == originIndex){
+                TABLE_SIZE++;
+                hashTable[TABLE_SIZE-1] = key;
+                return;
+            }
         }
-        newNode = createNode(key, index);
-        hashTable[index] = newNode;
+        hashTable[index] = key;
     }
+    keyCount++;
 }
 
 void LPHashTable::deleteKey(int key){
-    cout << "Attempting to delete " << key << endl;
     int index;
+    int originIndex;
     if(functionOne){
         index = hashFunctionOne(key);
     }else{
         index = hashFunctionTwo(key);
     }
-    if(hashTable[index]->key == key){
-        hashTable[index] = NULL;
-        delete hashTable[index];
+    if(hashTable[index]== key){
+        hashTable[index] = -1;
     }else{
-        LPNode* foundNode = searchKey(key);
-        if(foundNode){
-            hashTable[foundNode->index] = NULL;
-            delete hashTable[foundNode->index];
-        }else{
-            cout << "Node not found" << endl;
+        originIndex = index;
+        // Search for the index that the key corresponds to
+        index = searchKey(key);
+        if(index == -1){
+            return;
         }
+        hashTable[index] = -1;
     }
+    keyCount--;
+}
+
+/**
+ * Returns the load factor of the table
+ */
+float LPHashTable::getLoadFactor(){
+    return (float)keyCount/(float)TABLE_SIZE;
 }

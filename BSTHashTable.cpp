@@ -5,6 +5,8 @@ using namespace std;
 BSTHashTable::BSTHashTable(int tableSize, bool hashFunction){
     TABLE_SIZE = tableSize;
     functionOne = hashFunction;
+    keyCount = 0;
+    loadFactor = 0.0;
     BSThashTable = new BSTNode* [TABLE_SIZE];
     for(int i=0; i<TABLE_SIZE; i++){
         BSThashTable[i] = nullptr;
@@ -12,7 +14,6 @@ BSTHashTable::BSTHashTable(int tableSize, bool hashFunction){
 }
 
 BSTHashTable::~BSTHashTable(){
-    cout << "Deconstructing" << endl;
     for(int i=0; i<TABLE_SIZE; i++){
         if(BSThashTable[i] != NULL){
             while(BSThashTable[i] != NULL){
@@ -147,6 +148,7 @@ void BSTHashTable::insertNode(int key){
     else{
         BSThashTable[index] = insert(BSThashTable[index], key);
     }
+    keyCount++;
 }
 
 /**
@@ -225,4 +227,12 @@ void BSTHashTable::deleteNode(int key){
     }else{
         BSThashTable[index] = delNode(BSThashTable[index], key);
     }
+    keyCount--;
+}
+
+/**
+ * Returns the load factor of the table
+ */
+float BSTHashTable::getLoadFactor(){
+    return (float)keyCount/(float)TABLE_SIZE;
 }

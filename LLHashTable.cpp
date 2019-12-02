@@ -12,6 +12,8 @@ using namespace std;
 LLHashTable::LLHashTable(int tableSize, bool hashFunction){
     TABLE_SIZE = tableSize;
     functionOne = hashFunction;
+    keyCount = 0;
+    loadFactor = 0.0;
     LLhashTable = new node* [TABLE_SIZE];
     for(int i=0; i<TABLE_SIZE; i++){
         LLhashTable[i] = nullptr;
@@ -22,7 +24,6 @@ LLHashTable::LLHashTable(int tableSize, bool hashFunction){
  * De-allocate all the memory used by the hashtable
  */
 LLHashTable::~LLHashTable(){
-    cout << "Deconstructing" << endl;
     for(int i=0; i<TABLE_SIZE; i++){
         while (LLhashTable[i] != NULL){
             deleteNode(LLhashTable[i]->key);
@@ -167,6 +168,9 @@ void LLHashTable::deleteNode(int key){
     keyCount--;
 }
 
+/**
+ * Returns the load factor of the table
+ */
 float LLHashTable::getLoadFactor(){
     return (float)keyCount/(float)TABLE_SIZE;
 }

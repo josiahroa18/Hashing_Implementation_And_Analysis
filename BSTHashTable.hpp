@@ -21,6 +21,8 @@ class BSTHashTable{
         BSTNode* *BSThashTable;
         int TABLE_SIZE;
         bool functionOne;
+        int keyCount;
+        float loadFactor;
     public:
         BSTHashTable(int tableSize, bool hashFunction);
         ~BSTHashTable();
@@ -31,6 +33,7 @@ class BSTHashTable{
         BSTNode* searchTable(int key);
         void insertNode(int key);
         void deleteNode(int key);
+        float getLoadFactor();
 };
 
 #endif
