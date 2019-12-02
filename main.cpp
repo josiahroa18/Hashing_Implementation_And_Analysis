@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <ctime>
 #include "LLHashTable.hpp"
 #include "BSTHashTable.hpp"
 #include "LPHashTable.hpp"
@@ -30,12 +32,31 @@ void displayHashFunctionChoice(){
 }
 
 int main(){
-    int values[6] = {25, 13, 19, 7, 5, 6};
-    int valuesTwo[11] = {20, 50, 53, 75, 100, 67, 105, 3, 36, 39, 6}; 
-    int size = 11;
+    // Read in values from dataSet and store into array
+    cout << "Reading in data set" << endl;
+    int size = 40000;
+    int values[40000];
+    string valueS;
+    int value;
+    ifstream myFile;
+    myFile.open("dataSetA.csv");
+    int i=0;
+    while(getline(myFile, valueS, ',')){
+        value = stoi(valueS);
+        values[i] = value;
+        i++;
+    }
+    cout << "Data set loaded" << endl;
+
+    // Used for timing methods at different load factors
+    float loadFactors[5] = {0.1, 0.2, 0.5, 0.7, 0.9};
+    int loadFactorsCount = 5;
+    int startTime, endTime;
+    double execTime;
+
+    // Get collision method
     int collisionMethod;
     int hashFunctionChoice;
-    // Get collision method
     displayMenu();
     cin >> collisionMethod;
     while(collisionMethod > 4 || collisionMethod < 1){
@@ -69,42 +90,70 @@ int main(){
     if(collisionMethod == 1){
         cout << "Linked List Chaining" << endl;
         LLHashTable hashTable(size, choice);
-        for(int i=0; i<size; i++){
-            hashTable.insertNode(values[i]);
+        //Insert values until we reach a desired load factor
+        int i=0;
+        int loadFactorSelection;
+        for(int j=0; j<loadFactorsCount; j++){
+            while(hashTable.getLoadFactor() < loadFactors[loadFactorSelection]){
+                hashTable.insertNode(values[i]);
+                i++;
+            }
+            cout << "---" << hashTable.getLoadFactor() << "---" << endl;
+            // Insert 100 values
+            startTime = clock();
+            for(int k=0; k<100; k++){
+                hashTable.insertNode(values[i]);
+                i++;
+            }
+            endTime = clock();
+            execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
+            cout << "execution time for insertion: " << execTime << endl;
+            // Lookup 100 values
+            startTime = clock();
+            i -= 100;
+            for(int k=0; k<100; k++){
+                hashTable.searchTable(values[i]);
+                i++;
+            }
+            endTime = clock();
+            execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
+            cout << "execution time for lookup: " << execTime << endl;
+            // Delete 100 values
+            startTime = clock();
+            i -= 100;
+            for(int k=0; k<100; k++){
+                hashTable.deleteNode(values[i]);
+                i++;
+            }
+            i -= 100;
+            endTime = clock();
+            execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
+            cout << "execution time for deletion: " << execTime << endl;
+            loadFactorSelection++;
         }
-        hashTable.printHashTable();
+        if(choice){
+            cout << "Used hash function one" << endl;
+        }else{
+            cout << "Used hash function two" << endl;
+        }
         return 0;
     }
     // Binary Search Tree Chaining
     else if(collisionMethod == 2){
         cout << "Binary Heap Chaining" << endl;
         BSTHashTable hashTable(size, choice);
-        for(int i=0; i<size; i++){
-            hashTable.insertNode(values[i]);
-        }
-        hashTable.printHashTable();
         return 0;
     }
     // Linear Probing
     else if(collisionMethod == 3){
         cout << "Linear Probing" << endl;
         LPHashTable hashTable(size, choice);
-        for(int i=0; i<size; i++){
-            hashTable.insertKey(values[i]);
-        }
-        hashTable.printTable();
         return 0;
     }
     // Cuckoo Hashing
     else{
         cout << "Cuckoo Hashing" << endl;
         CHHashTable hashTable(size);
-        for(int i=0; i<size; i++){
-            hashTable.insert(valuesTwo[i]);
-        }
-        hashTable.printTable();
-        hashTable.deleteValue(20);
-        hashTable.printTable();
         return 0;
     }
 }
