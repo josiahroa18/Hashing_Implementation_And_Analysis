@@ -59,7 +59,35 @@ void displayConfiguration(bool choice, int collisionMethod){
     }
 }
 
-int main(){
+void displayData(float insertData[], float lookUpData[], float deleteData[], int size){
+    cout << "--- Data ---" << endl;
+    cout << "Insert Data: [";
+    for(int i=0; i<size; i++){
+        cout << insertData[i];
+        if(i != size-1){
+            cout << ", ";
+        }
+    }
+    cout << "]" <<  endl;
+    cout << "Look Up Data: [";
+    for(int i=0; i<size; i++){
+        cout << lookUpData[i];
+        if(i != size-1){
+            cout << ", ";
+        }
+    }
+    cout << "]" << endl;
+    cout << "Delete Data: [";
+    for(int i=0; i<size; i++){
+        cout << deleteData[i];
+        if(i != size-1){
+            cout << ", ";
+        }
+    }
+    cout << "]" <<  endl;
+}
+
+int main(int argc, char* argv[]){
     // Read in values from dataSet and store into array
     cout << "Reading in data set" << endl;
     int size = 10009;
@@ -67,7 +95,7 @@ int main(){
     string valueS;
     int value;
     ifstream myFile;
-    myFile.open("dataSetA.csv");
+    myFile.open(argv[1]);
     int i=0;
     while(getline(myFile, valueS, ',')){
         value = stoi(valueS);
@@ -113,6 +141,10 @@ int main(){
         }
     }
 
+    float insertData[6];
+    float lookUpData[6];
+    float deleteData[6];
+
     // Operate on the desired hash table
     cout << "Initializing hash table" << endl;
     // Linked List Chaining
@@ -121,7 +153,8 @@ int main(){
         LLHashTable hashTable(size, choice);
         //Insert values until we reach a desired load factor
         int i=0;
-        int loadFactorSelection;
+        int loadFactorSelection = 0;
+        int append = 0;
         for(int j=0; j<loadFactorsCount; j++){
             cout.precision(1);
             cout << fixed;
@@ -131,7 +164,7 @@ int main(){
             }
             cout << "---" << hashTable.getLoadFactor() << "---" << endl;
             // Insert 100 values
-            cout.precision(7);
+            cout.precision(6);
             cout << fixed;
             startTime = clock();
             for(int k=0; k<100; k++){
@@ -142,6 +175,7 @@ int main(){
             execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
             cout << "execution time for insertion: " << execTime << endl;
             insertTime = execTime;
+            insertData[append] = insertTime;
             // Lookup 100 values
             startTime = clock();
             i -= 100;
@@ -153,6 +187,7 @@ int main(){
             execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
             cout << "execution time for lookup: " << execTime << endl;
             lookUpTime = execTime;
+            lookUpData[append] = lookUpTime;
             // Delete 100 values
             startTime = clock();
             i -= 100;
@@ -165,10 +200,13 @@ int main(){
             execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
             cout << "execution time for deletion: " << execTime << endl;
             deleteTime = execTime;
+            deleteData[append] = deleteTime;
             loadFactorSelection++;
             cout << "Average time: " << (float)(insertTime + lookUpTime + deleteTime)/3.0 << endl;
+            append++;
         }
         displayConfiguration(choice, collisionMethod);
+        displayData(insertData, lookUpData, deleteData, 6);
         return 0;
     }
     // Binary Search Tree Chaining
@@ -176,7 +214,8 @@ int main(){
         cout << "Binary Heap Chaining" << endl;
         BSTHashTable hashTable(size, choice);
         int i=0;
-        int loadFactorSelection;
+        int loadFactorSelection = 0;
+        int append = 0;
         for(int j=0; j<loadFactorsCount; j++){
             cout.precision(1);
             cout << fixed;
@@ -186,7 +225,7 @@ int main(){
             }
             cout << "---" << hashTable.getLoadFactor() << "---" << endl;
             // Insert 100 values
-            cout.precision(7);
+            cout.precision(6);
             cout << fixed;
             startTime = clock();
             for(int k=0; k<100; k++){
@@ -197,6 +236,7 @@ int main(){
             execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
             cout << "execution time for insertion: " << execTime << endl;
             insertTime = execTime;
+            insertData[append] = insertTime;
             // Lookup 100 values
             startTime = clock();
             i -= 100;
@@ -208,6 +248,7 @@ int main(){
             execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
             cout << "execution time for lookup: " << execTime << endl;
             lookUpTime = execTime;
+            lookUpData[append] = lookUpTime;
             // Delete 100 values
             startTime = clock();
             i -= 100;
@@ -220,10 +261,13 @@ int main(){
             execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
             cout << "execution time for deletion: " << execTime << endl;
             deleteTime = execTime;
+            deleteData[append] = deleteTime;
             cout << "Average time: " << (float)(insertTime + lookUpTime + deleteTime)/3.0 << endl;
             loadFactorSelection++;
+            append++;
         }
         displayConfiguration(choice, collisionMethod);
+        displayData(insertData, lookUpData, deleteData, 6);
         return 0;
     }
     // Linear Probing
@@ -231,7 +275,8 @@ int main(){
         cout << "Linear Probing" << endl;
         LPHashTable hashTable(size, choice);
         int i=0;
-        int loadFactorSelection;
+        int loadFactorSelection = 0;
+        int append = 0;
         for(int j=0; j<loadFactorsCount; j++){
             cout.precision(1);
             cout << fixed;
@@ -241,7 +286,7 @@ int main(){
             }
             cout << "---" << hashTable.getLoadFactor() << "---" << endl;
             // Insert 100 values
-            cout.precision(7);
+            cout.precision(6);
             cout << fixed;
             startTime = clock();
             for(int k=0; k<100; k++){
@@ -252,6 +297,7 @@ int main(){
             execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
             cout << "execution time for insertion: " << execTime << endl;
             insertTime = execTime;
+            insertData[append] = insertTime;
             // Lookup 100 values
             startTime = clock();
             i -= 100;
@@ -263,6 +309,7 @@ int main(){
             execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
             cout << "execution time for lookup: " << execTime << endl;
             lookUpTime = execTime;
+            lookUpData[append] = lookUpTime;
             // Delete 100 values
             startTime = clock();
             i -= 100;
@@ -275,10 +322,13 @@ int main(){
             execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
             cout << "execution time for deletion: " << execTime << endl;
             deleteTime = execTime;
+            deleteData[append] = deleteTime;
             cout << "Average time: " << (float)(insertTime + lookUpTime + deleteTime)/3.0 << endl;
             loadFactorSelection++;
+            append++;
         }
         displayConfiguration(choice, collisionMethod);
+        displayData(insertData, lookUpData, deleteData, 6);
         return 0;
     }
     // Cuckoo Hashing
@@ -286,7 +336,8 @@ int main(){
         cout << "Cuckoo Hashing" << endl;
         CHHashTable hashTable(size);
         int i=0;
-        int loadFactorSelection;
+        int loadFactorSelection = 0;
+        int append = 0;
         for(int j=0; j<loadFactorsCount; j++){
             cout.precision(1);
             cout << fixed;
@@ -296,7 +347,7 @@ int main(){
             }
             cout << "---" << hashTable.getLoadFactor() << "---" << endl;
             // Insert 100 values
-            cout.precision(7);
+            cout.precision(6);
             cout << fixed;
             startTime = clock();
             for(int k=0; k<100; k++){
@@ -307,6 +358,7 @@ int main(){
             execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
             cout << "execution time for insertion: " << execTime << endl;
             insertTime = execTime;
+            insertData[append] = insertTime;
             // Lookup 100 values
             startTime = clock();
             i -= 100;
@@ -318,6 +370,7 @@ int main(){
             execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
             cout << "execution time for lookup: " << execTime << endl;
             lookUpTime = execTime;
+            lookUpData[append] = lookUpTime;
             // Delete 100 values
             startTime = clock();
             i -= 100;
@@ -330,10 +383,13 @@ int main(){
             execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
             cout << "execution time for deletion: " << execTime << endl;
             deleteTime = execTime;
+            deleteData[append] = deleteTime;
             cout << "Average time: " << (float)(insertTime + lookUpTime + deleteTime)/3.0 << endl;
             loadFactorSelection++;
+            append ++;
         }
         displayConfiguration(choice, collisionMethod);
+        displayData(insertData, lookUpData, deleteData, 6);
         return 0;
     }
 }
