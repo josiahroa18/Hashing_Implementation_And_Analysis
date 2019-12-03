@@ -6,8 +6,9 @@ CHHashTable::CHHashTable(int tableSize){
     TABLE_SIZE = tableSize;
     tableOne = new int [TABLE_SIZE];
     tableTwo = new int [TABLE_SIZE];
-    valuesStored = 0;
-    loadFactor = 0;
+    keyCount = 0;
+    loadFactor = 0.0;
+    reHashCount = 0;
     for(int i=0; i<TABLE_SIZE; i++){
         tableOne[i] = -1;
         tableTwo[i] = -1;
@@ -41,20 +42,19 @@ void CHHashTable::insert(int key){
     int tempKey;
     int originKey = key;
     int newKey = key;
-    cout << "Inserting " << key << endl;
     while(true){
         indexOne = hashFunctionOne(newKey);
         indexTwo = hashFunctionTwo(newKey);
         if(tableOne[indexOne] == -1){
             tableOne[indexOne] = newKey;
-            valuesStored++;
+            keyCount++;
             return;
         }
         tempKey = tableOne[indexOne];
         tableOne[indexOne] = newKey;
         if(tableTwo[indexTwo] == -1){
             tableTwo[indexTwo] = tempKey;
-            valuesStored++;
+            keyCount++;
             return;
         }else{
             // Take what was in tableTwo and insert into Table One (loop)
@@ -133,12 +133,10 @@ void CHHashTable::printTable(){
 void CHHashTable::searchValue(int key){
     int indexOne = hashFunctionOne(key);
     if(tableOne[indexOne] == key){
-        cout << "Found " << tableOne[indexOne] << endl;
         return;
     }
     int indexTwo = hashFunctionTwo(key);
     if(tableTwo[indexTwo] == key){
-        cout << "Found " << tableTwo[indexTwo] << endl;
         return;
     }
     cout << key << " not in hash table" << endl;
@@ -152,25 +150,23 @@ void CHHashTable::searchValue(int key){
 void CHHashTable::deleteValue(int key){
     int indexOne = hashFunctionOne(key);
     if(tableOne[indexOne] == key){
-        cout << "Deleted " << tableOne[indexOne] << endl;
         tableOne[indexOne] = -1;
-        valuesStored--;
+        keyCount--;
         return;
     }
     int indexTwo = hashFunctionTwo(key);
     if(tableTwo[indexTwo] == key){
-        cout << "Deleted " << tableTwo[indexTwo] << endl;
         tableTwo[indexTwo] = -1;
-        valuesStored--;
+        keyCount--;
         return;
     }
     cout << key << " not in hash table" << endl;
 }
 
-void CHHashTable::getLoadFactor(){
-    cout << "Load Factor: " << valuesStored/TABLE_SIZE << endl;
+float CHHashTable::getLoadFactor(){
+    return (float)keyCount/(float)TABLE_SIZE;
 }
 
-void CHHashTable::getreHashCount(){
-    cout << "Table re-hashed " << reHashCount << " times" << endl;
+int CHHashTable::getreHashCount(){
+    return reHashCount;
 }

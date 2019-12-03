@@ -17,7 +17,7 @@ class CHHashTable{
         int* tableOne;
         int* tableTwo;
         int reHashCount;
-        int valuesStored;
+        int keyCount;
         float loadFactor;
         vector<int> deletedValues;
         
@@ -31,8 +31,8 @@ class CHHashTable{
         void printTable();
         void searchValue(int key);
         void deleteValue(int key);
-        void getLoadFactor();
-        void getreHashCount();
+        float getLoadFactor();
+        int getreHashCount();
 };
 
 #endif

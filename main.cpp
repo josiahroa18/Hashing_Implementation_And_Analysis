@@ -78,6 +78,7 @@ int main(){
 
     // Used for timing methods at different load factors
     float loadFactors[6] = {0.1, 0.2, 0.5, 0.7, 0.9, 1.0};
+    float CHloadFactors[6] = {0.1, 0.2, 0.3, 0.4, 0.5, 0.7};
     int loadFactorsCount = 6;
     int startTime, endTime;
     double execTime, insertTime, lookUpTime, deleteTime;
@@ -284,6 +285,55 @@ int main(){
     else{
         cout << "Cuckoo Hashing" << endl;
         CHHashTable hashTable(size);
+        int i=0;
+        int loadFactorSelection;
+        for(int j=0; j<loadFactorsCount; j++){
+            cout.precision(1);
+            cout << fixed;
+            while(hashTable.getLoadFactor() < CHloadFactors[loadFactorSelection]){
+                hashTable.insert(values[i]);
+                i++;
+            }
+            cout << "---" << hashTable.getLoadFactor() << "---" << endl;
+            // Insert 100 values
+            cout.precision(7);
+            cout << fixed;
+            startTime = clock();
+            for(int k=0; k<100; k++){
+                hashTable.insert(values[i]);
+                i++;
+            }
+            endTime = clock();
+            execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
+            cout << "execution time for insertion: " << execTime << endl;
+            insertTime = execTime;
+            // Lookup 100 values
+            startTime = clock();
+            i -= 100;
+            for(int k=0; k<100; k++){
+                hashTable.searchValue(values[i]);
+                i++;
+            }
+            endTime = clock();
+            execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
+            cout << "execution time for lookup: " << execTime << endl;
+            lookUpTime = execTime;
+            // Delete 100 values
+            startTime = clock();
+            i -= 100;
+            for(int k=0; k<100; k++){
+                hashTable.deleteValue(values[i]);
+                i++;
+            }
+            i -= 100;
+            endTime = clock();
+            execTime = (double)(endTime-startTime)/CLOCKS_PER_SEC;
+            cout << "execution time for deletion: " << execTime << endl;
+            deleteTime = execTime;
+            cout << "Average time: " << (float)(insertTime + lookUpTime + deleteTime)/3.0 << endl;
+            loadFactorSelection++;
+        }
+        displayConfiguration(choice, collisionMethod);
         return 0;
     }
 }
