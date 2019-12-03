@@ -1,4 +1,5 @@
 *.pdf
 *.out
 *.csv
+*.py
 .DS_Store
