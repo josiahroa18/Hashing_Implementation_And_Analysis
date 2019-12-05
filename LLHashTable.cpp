@@ -33,6 +33,9 @@ LLHashTable::~LLHashTable(){
     LLhashTable = NULL;
 }
 
+/**
+ * Creates a LL node with given key and returns it
+ */
 node* LLHashTable::createLLNode(int key){
     node* newNode = new node;
     newNode->key = key;
@@ -110,10 +113,6 @@ void LLHashTable::insertNode(int key){
             curr->next = newNode;
         }
     }
-    // Used for testing
-    // else{
-    //     cout << key << " is a duplicate entry" << endl;
-    // }
     keyCount++;
 }
 
@@ -158,13 +157,7 @@ void LLHashTable::deleteNode(int key){
                 prev->next = NULL;
             }
         }
-        // Used for testing
-        //cout << "Deleted " << key << " from the table" << endl;
     }
-    // Used for testing
-    // else{
-    //     cout << key << " is not in the table" << endl;
-    // }
     keyCount--;
 }
 

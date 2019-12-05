@@ -5,6 +5,11 @@
 #include <cmath>
 using namespace std;
 
+/**
+ * This is a hash table implementation
+ * - Collisions will be handled using Linear Probing 
+ */
+
 class LPHashTable{
     private:
         int TABLE_SIZE;

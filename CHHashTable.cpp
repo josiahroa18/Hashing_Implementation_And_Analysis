@@ -2,6 +2,9 @@
 #include <iostream>
 using namespace std;
 
+/**
+ * Constructor
+ */
 CHHashTable::CHHashTable(int tableSize){
     TABLE_SIZE = tableSize;
     tableOne = new int [TABLE_SIZE];
@@ -15,6 +18,9 @@ CHHashTable::CHHashTable(int tableSize){
     }
 }
 
+/**
+ * De-constructor
+ */
 CHHashTable::~CHHashTable(){
     delete [] tableOne;
     tableOne = NULL;
@@ -163,10 +169,16 @@ void CHHashTable::deleteValue(int key){
     cout << key << " not in hash table" << endl;
 }
 
+/**
+ * Returns the load factor of the table
+ */
 float CHHashTable::getLoadFactor(){
     return (float)keyCount/(float)TABLE_SIZE;
 }
 
+/**
+ * Returns the amount of times the table re-hashed
+ */
 int CHHashTable::getreHashCount(){
     return reHashCount;
 }

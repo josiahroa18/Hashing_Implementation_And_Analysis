@@ -2,6 +2,9 @@
 #include <iostream>
 using namespace std;
 
+/**
+ * Constructor
+ */
 BSTHashTable::BSTHashTable(int tableSize, bool hashFunction){
     TABLE_SIZE = tableSize;
     functionOne = hashFunction;
@@ -13,6 +16,9 @@ BSTHashTable::BSTHashTable(int tableSize, bool hashFunction){
     }
 }
 
+/**
+ * De-constructor
+ */
 BSTHashTable::~BSTHashTable(){
     for(int i=0; i<TABLE_SIZE; i++){
         if(BSThashTable[i] != NULL){

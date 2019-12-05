@@ -2,6 +2,9 @@
 #include "LPHashTable.hpp"
 using namespace std;
 
+/**
+ * Constructor
+ */
 LPHashTable::LPHashTable(int tableSize, bool hashFunction){
     TABLE_SIZE = tableSize;
     functionOne = hashFunction;
@@ -13,6 +16,9 @@ LPHashTable::LPHashTable(int tableSize, bool hashFunction){
     }
 }
 
+/**
+ * De-constructor
+ */
 LPHashTable::~LPHashTable(){
     for(int i=0; i<TABLE_SIZE; i++){
         if(hashTable[i] != -1){
@@ -31,6 +37,9 @@ int LPHashTable::hashFunctionTwo(int key){
     return floor(key/TABLE_SIZE);
 }
 
+/**
+ * Prints out the table for testing
+ */
 void LPHashTable::printTable(){
     for(int i=0; i<TABLE_SIZE; i++){
         cout << i << " -> ";
@@ -41,6 +50,12 @@ void LPHashTable::printTable(){
     }
 }
 
+/**
+ * Searches for a specified key in the table. Loops through table with possible
+ * rotation until key is found or we reach origin index
+ * - returns index of key if found
+ * - return -1 if not found
+ */
 int LPHashTable::searchKey(int key){
     int index;
     int originIndex;
@@ -64,6 +79,12 @@ int LPHashTable::searchKey(int key){
     return index;
 }
 
+/**
+ * Will attempt to place a key at the specified index. If full, increase
+ * step by 1 and try again. Repeat until empty slot found or table is full
+ * - increase table size by 1 if full
+ * - increase key count by one once key insertion is finished
+ */
 void LPHashTable::insertKey(int key){
     int index;
     int originIndex;
@@ -93,6 +114,10 @@ void LPHashTable::insertKey(int key){
     keyCount++;
 }
 
+/**
+ * Uses the searchKey function to find the key in the table if it exists
+ * - Deletes key if it exists and reduces keyCount by 1
+ */
 void LPHashTable::deleteKey(int key){
     int index;
     int originIndex;
