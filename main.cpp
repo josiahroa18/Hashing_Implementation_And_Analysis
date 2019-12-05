@@ -9,6 +9,11 @@
 using namespace std;
 
 /**
+ * TODO: Implement a values vs index output
+ * TODO: Finish commenting code
+ */
+
+/**
  * Displays options for the user to select which type of collision
  * method they would like to use
  */
