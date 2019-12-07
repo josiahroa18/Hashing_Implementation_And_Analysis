@@ -242,3 +242,36 @@ void BSTHashTable::deleteNode(int key){
 float BSTHashTable::getLoadFactor(){
     return (float)keyCount/(float)TABLE_SIZE;
 }
+
+/**
+ * countAtIndex recursive helper function
+ */
+int countRecursive(BSTNode* curr){
+    int count = 1;
+    if(curr->left != NULL){
+        count += countRecursive(curr->left);
+    }
+    if(curr->right != NULL){
+        count += countRecursive(curr->right);
+    }
+    return count;
+}
+
+/**
+ * Returns the count for how many values are at a specific index
+ */
+int BSTHashTable::countAtIndex(int i){
+    BSTNode* curr = BSThashTable[i];
+    int count = 0;
+    if(curr != NULL){
+        count = countRecursive(curr);
+    }
+    return count;
+}
+
+/**
+ * returns the size of the table
+ */
+int BSTHashTable::getTableSize(){
+    return TABLE_SIZE;
+}

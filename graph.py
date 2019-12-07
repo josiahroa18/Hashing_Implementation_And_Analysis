@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import csv
 
 def graph_data(insert_data, look_up_data, delete_data, load_factor_data, save_location, hash_function, data_set, collision_method):
     hash_choice = ""
@@ -51,6 +52,26 @@ def graph_average(insert_average, look_up_average, delete_average, load_factor_d
     plt.title(collision_choice + " Averages")
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.00), shadow=True, ncol=2)
     plt.savefig(save_location)
+    plt.close()
+
+def graph_index_vs_value(file_name, collision_method):
+    values = []
+    indexes = []
+    file = open(file_name, "r")
+    i = 0
+    for line in file:
+        values.append(int(line))
+        indexes.append(i)
+        i += 1
+    plt.bar(indexes, values)
+    plt.xlabel("Indexes")
+    plt.ylabel("Value count")
+    if collision_method == 1 :
+        plt.savefig("LL Index vs Values")
+        plt.title("LL Index vs Values")
+    elif collision_method == 2:
+        plt.savefig("BST Index vs Values")
+        plt.title("BST Index vs Values")
     plt.close()
 
 def main():
@@ -205,7 +226,11 @@ def main():
         delete_ave.append((delete_data_one[i] + delete_data_two[i]) / 2.0)
     graph_average(insert_ave, look_up_ave, delete_ave, load_factor_data, "./Cuckoo_Hashing_Graphs/Cuckoo-Hashing-Averages", 4)
 
+    # -------------------------------------------------------------------------------------------------------------------------------- #
 
+    # Graph data sets
+    graph_index_vs_value("LLdataFile.txt", 1)
+    graph_index_vs_value("BSTdataFile.txt", 2)
 
 
 if __name__ == "__main__":

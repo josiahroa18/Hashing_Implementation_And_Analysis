@@ -168,3 +168,22 @@ float LLHashTable::getLoadFactor(){
     return (float)keyCount/(float)TABLE_SIZE;
 }
 
+/**
+ * Counts how many values are at a specific index
+ */
+int LLHashTable::countAtIndex(int i){
+    int count = 0;
+    node* curr = LLhashTable[i];
+    while(curr != NULL){
+        count ++;
+        curr = curr->next;
+    }
+    return count;
+}
+
+/**
+ * Returns the size of the table
+ */
+int LLHashTable::getTableSize(){
+    return TABLE_SIZE;
+}

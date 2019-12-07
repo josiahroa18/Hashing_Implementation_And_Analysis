@@ -20,7 +20,7 @@ using namespace std;
 void displayMenu(){
     cout << "Please select a collision method (1-4)" << endl;
     cout << "(1) Linked List Chaining" << endl;
-    cout << "(2) Binary Heap Chaining" << endl;
+    cout << "(2) Binary Search Tree Chaining" << endl;
     cout << "(3) Linear Probing" << endl;
     cout << "(4) Cuckoo Hashing" << endl;
 }
@@ -64,6 +64,9 @@ void displayConfiguration(bool choice, int collisionMethod){
     }
 }
 
+/**
+ * Displays the data in terminal to make it easier for copying data over to graph
+ */
 void displayData(float insertData[], float lookUpData[], float deleteData[], int size){
     cout << "--- Data ---" << endl;
     cout << "Insert Data: [";
@@ -97,6 +100,7 @@ int main(int argc, char* argv[]){
     cout << "Reading in data set" << endl;
     int size = 10009;
     int values[40000];
+    int valueSize = 40000;
     string valueS;
     int value;
     ifstream myFile;
@@ -107,6 +111,7 @@ int main(int argc, char* argv[]){
         values[i] = value;
         i++;
     }
+    myFile.close();
     cout << "Data set loaded" << endl;
 
     // Used for timing methods at different load factors
@@ -212,6 +217,19 @@ int main(int argc, char* argv[]){
         }
         displayConfiguration(choice, collisionMethod);
         displayData(insertData, lookUpData, deleteData, 6);
+        // Collect data for data set evaluation
+        cout << "--- Inserting all values into new table for data set evaluation ---" << endl;
+        LLHashTable dataTable(size, choice);
+        for(int i=0; i<valueSize; i++){
+            dataTable.insertNode(values[i]);
+        }
+        // Check how many values are in each index and write to file
+        ofstream dataFile;
+        dataFile.open("LLdataFile.txt");
+        for(int i=0; i<100; i++){
+            dataFile << dataTable.countAtIndex(i) << endl;
+        }
+        dataFile.close();
         return 0;
     }
     // Binary Search Tree Chaining
@@ -273,6 +291,18 @@ int main(int argc, char* argv[]){
         }
         displayConfiguration(choice, collisionMethod);
         displayData(insertData, lookUpData, deleteData, 6);
+        cout << "--- Inserting all values into new table for data set evaluation ---" << endl;
+        BSTHashTable dataTable(size, choice);
+        for(int i=0; i<valueSize; i++){
+            dataTable.insertNode(values[i]);
+        }
+        //Check how many values are in each index and write to file
+        ofstream dataFile;
+        dataFile.open("BSTdataFile.txt");
+        for(int i=0; i<100; i++){
+            dataFile << dataTable.countAtIndex(i) << endl;
+        }
+        dataFile.close();
         return 0;
     }
     // Linear Probing

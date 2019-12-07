@@ -34,6 +34,8 @@ class LLHashTable{
         void insertNode(int key);
         void deleteNode(int key);
         float getLoadFactor();
+        int countAtIndex(int i);
+        int getTableSize();
 };
 
 #endif

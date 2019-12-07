@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <queue>
 using namespace std;
 
 /**
@@ -34,6 +35,8 @@ class BSTHashTable{
         void insertNode(int key);
         void deleteNode(int key);
         float getLoadFactor();
+        int countAtIndex(int i);
+        int getTableSize();
 };
 
 #endif
