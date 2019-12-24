@@ -3,7 +3,7 @@ CSCI 2270 - CU Boulder Data Structures Final Project
 
 This project takes a handful of collision implementations for hash tables and evaluates their insertion, look up, and deletion times for different load factors. The following are the collision methods that were used and how they work.
 
-##Chaining by Linked List##
+<b>Chaining by Linked List</b>
 <p> For this collision method implementation, collisions will be handled by chaining data with a linked list at full indices. 
 Every time a key is inserted, it is stored in a node. If the selected hash function for this key returns an index with a node present, this node will point to the new node. New nodes will always be added to the end of whatever Linked List is present at a specific index. </p>
 <p> Deletion and look up methods may also have to traverse down a Linked List at a certain index until a match is found. If a node is to be deleted, standard Linked List deletion rules still hold.</p>
